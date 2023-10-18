@@ -6,24 +6,33 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useMatches,
   useRouteError,
 } from '@remix-run/react';
 
 import sharedStyles from '~/styles/shared.css';
 import Error from './components/util/Error';
+import i18next from '~/i18next.server';
+import { useTranslation } from 'react-i18next';
+import { useChangeLanguage } from 'remix-i18next';
+import { json } from "@remix-run/node";
+import { t } from 'i18next';
 
-export const meta = () => ({
-  charset: 'utf-8',
-  title: 'New Remix App',
-  viewport: 'width=device-width,initial-scale=1',
-});
+export let loader = async ({ request }) => {
+  let locale = await i18next.getLocale(request);
+  return json({ locale });
+};
+
+export let handle = {
+  i18n: "common",
+};
 
 function Document({ title, children }) {
   const matches = useMatches();
   const disabledJS = matches.some(match => match.handle?.disabledJS);
   return (
-    <html lang="en">
+    <>
       <head>
         {title && <title>{title}</title>}
         <Meta />
@@ -35,23 +44,33 @@ function Document({ title, children }) {
         {!disabledJS && <Scripts />}
         <LiveReload />
       </body>
-    </html>
+    </>
   );
 }
+
+
 export default function App() {
+  let { locale } = useLoaderData();
+  let { i18n } = useTranslation();
+  useChangeLanguage(locale);
   return (
-    <Document>
-      <Outlet />
-    </Document>
+    <html lang={locale} dir={i18n.dir()}>
+      <Document>
+        <Outlet />
+      </Document>
+
+    </html>
+
   );
 }
 
 export function CatchBoundary() {
+  let { t } = useTranslation();
   const caughtResponse = useRouteError();
   return <Document title={caughtResponse.statusText}>
     <main>
       <Error title={caughtResponse.statusText}>
-        <p>{caughtResponse.data?.message || 'Something went wrong. Please try again later'}</p>
+        <p>{caughtResponse.data?.message || 'Something went wrong. Please try again later'} </p>
         <p>Back to <Link to="/"> Safety</Link></p>
       </Error>
     </main>

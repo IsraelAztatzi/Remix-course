@@ -1,16 +1,19 @@
 import { Form, Link, NavLink, useLoaderData } from '@remix-run/react';
-
+import { useTranslation } from 'react-i18next';
 import Logo from '../util/Logo';
+
 
 function MainHeader() {
   const userId = useLoaderData();
+  const { t } = useTranslation();
+
   return (
     <header id="main-header">
       <Logo />
       <nav id="main-nav">
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">{t("header.home")}</NavLink>
           </li>
           <li>
             <NavLink to="/pricing">Pricing</NavLink>
@@ -19,6 +22,7 @@ function MainHeader() {
       </nav>
       <nav id="cta-nav">
         <ul>
+          <li><button className='cta-alt'>{t("header.language")}</button></li>
           <li>
             {userId && (
               <Form method="post" action="/logout" id="logout-form">
@@ -30,6 +34,7 @@ function MainHeader() {
               </Link>
             )}
           </li>
+
         </ul>
       </nav>
     </header>
