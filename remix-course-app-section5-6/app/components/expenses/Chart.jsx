@@ -1,4 +1,5 @@
 import ChartBar from './ChartBar';
+import { useTranslation } from 'react-i18next';
 
 function Chart({ expenses }) {
   const chartDataPoints = [
@@ -23,10 +24,11 @@ function Chart({ expenses }) {
 
   const dataPointValues = chartDataPoints.map((dataPoint) => dataPoint.value);
   const totalMaximum = Math.max(...dataPointValues);
+  let { t } = useTranslation();
 
   return (
     <section>
-      <h2>Monthly Expenses</h2>
+      <h2>{t("expense.chart.monthly")}</h2>
       <ol className='chart'>
         {chartDataPoints.map((dataPoint) => (
           <ChartBar

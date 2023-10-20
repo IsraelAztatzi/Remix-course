@@ -1,14 +1,14 @@
-
 import { FaPlus, FaDownload } from 'react-icons/fa';
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import ExpensesList from '~/components/expenses/ExpensesList';
 import { getExpenses } from '~/data/expenses.server';
 import { requireUserSession } from '~/data/auth.server';
 import { json } from '@remix-run/node';
-
+import { useTranslation } from 'react-i18next';
 export default function ExpensesLayout() {
   const expenses = useLoaderData();
   const hasExpenses = expenses && expenses.length > 0;
+  const { t } = useTranslation();
   return (
     <>
       <Outlet />
@@ -16,11 +16,11 @@ export default function ExpensesLayout() {
         <section id="expenses-actions">
           <Link to="add">
             <FaPlus />
-            <span>Add Expense</span>
+            <span>{t("expenses.add")}</span>
           </Link>
           <a href="/expenses/raw">
             <FaDownload />
-            <span>Load Raw Data</span>
+            <span>{t("expenses.load")}</span>
           </a>
         </section>
         {hasExpenses && <ExpensesList expenses={expenses} />}

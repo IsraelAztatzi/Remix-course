@@ -1,23 +1,24 @@
 import { Link } from '@remix-run/react';
 import { FaArrowRight, FaDollarSign, FaChartBar } from 'react-icons/fa';
-
+import { useTranslation } from 'react-i18next';
 export default function Index() {
+  let { t } = useTranslation();
   return (
     <main>
       <section className="marketing-section">
         <header>
           <FaDollarSign />
-          <h2>A Central Space</h2>
+          <h2>{t("index.centralspacer")}</h2>
         </header>
         <div className="marketing-content">
           <div className="marketing-image">
             <img src="images/expenses-management.jpg" alt="A list of expenses." />
           </div>
           <div className="marketing-explanation">
-            <p>Manage your expenses in one central place.</p>
+            <p>{t("index.manage")} </p>
             <p>
               <Link className="cta" to="/expenses">
-                <span>Get Started</span>
+                <span>{t("index.started")}</span>
                 <FaArrowRight />
               </Link>
             </p>
@@ -27,12 +28,11 @@ export default function Index() {
       <section className="marketing-section">
         <header>
           <FaChartBar />
-          <h2>Detailed Analytics</h2>
+          <h2>{t("index.analytics")}</h2>
         </header>
         <div className="marketing-content">
           <p className='marketing-explanation'>
-            Benefit from best-in-class analytics to understand your spending
-            patterns.
+            {t("index.benefit")}
           </p>
           <div className="marketing-image">
             <img src="images/expenses-chart.jpg" alt="A demo bar chart." />

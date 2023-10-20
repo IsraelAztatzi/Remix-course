@@ -1,4 +1,5 @@
 import { Form, Link, useFetcher, useSubmit } from '@remix-run/react';
+import { useTranslation } from 'react-i18next';
 
 function ExpenseListItem({ id, title, amount }) {
   const fetcher = useFetcher();
@@ -11,7 +12,7 @@ function ExpenseListItem({ id, title, amount }) {
 
     fetcher.submit(null, { method: 'delete', action: `/expenses/${id}` });
   }
-
+  const { t } = useTranslation();
   if (fetcher.state !== 'idle') {
     return <article className='expense-item locked'>
       <p>Deleting..</p>
@@ -24,12 +25,12 @@ function ExpenseListItem({ id, title, amount }) {
         <p className="expense-amount">${amount.toFixed(2)}</p>
       </div>
       <menu className="expense-actions">
-        <button onClick={deleteExpenseItemHandler}>Delete</button>
+        <button onClick={deleteExpenseItemHandler}>{t("expenses.list.delete")}</button>
         {/*<Form method='delete' action={`/expenses/${id}`}>
           <button>Delete</button>
           </Form>*/}
 
-        <Link to={id}>Edit</Link>
+        <Link to={id}>{t("expenses.list.edit")}</Link>
       </menu>
     </article>
   );

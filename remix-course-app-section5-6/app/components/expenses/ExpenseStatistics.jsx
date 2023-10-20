@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-
+import { useTranslation } from 'react-i18next';
 function calculateSummaryStatistics(expenses) {
   const amounts = expenses.map((expense) => +expense.amount);
   const maxAmount = Math.max(...amounts);
@@ -15,25 +15,26 @@ function ExpenseStatistics({ expenses }) {
     () => calculateSummaryStatistics(expenses),
     [expenses]
   );
+  let { t } = useTranslation();
 
   return (
     <section>
-      <h2>Summary Statistics</h2>
+      <h2>{t("expense.summary")}</h2>
       <dl id="expense-statistics">
         <div>
-          <dt>Total</dt>
+          <dt>{t("expense.total")}</dt>
           <dd>${sum.toFixed(2)}</dd>
         </div>
         <div>
-          <dt>Average</dt>
+          <dt>{t("expense.average")}</dt>
           <dd>${mean.toFixed(2)}</dd>
         </div>
         <div>
-          <dt> Min. Amount</dt>
+          <dt> {t("expense.min.amount")}</dt>
           <dd>${minAmount.toFixed(2)}</dd>
         </div>
         <div>
-          <dt>Max. Amount</dt>
+          <dt>{t("expense.max.amount")}</dt>
           <dd>${maxAmount.toFixed(2)}</dd>
         </div>
       </dl>

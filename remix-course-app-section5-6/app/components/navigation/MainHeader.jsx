@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import Logo from '../util/Logo';
 
 
+
 function MainHeader() {
   const userId = useLoaderData();
   const { t } = useTranslation();
-
   return (
     <header id="main-header">
       <Logo />
@@ -16,21 +16,23 @@ function MainHeader() {
             <NavLink to="/">{t("header.home")}</NavLink>
           </li>
           <li>
-            <NavLink to="/pricing">Pricing</NavLink>
+            <NavLink to="/pricing">{t("header.pricing")}</NavLink>
           </li>
         </ul>
       </nav>
       <nav id="cta-nav">
         <ul>
-          <li><button className='cta-alt'>{t("header.language")}</button></li>
+          <li>
+
+          </li>
           <li>
             {userId && (
               <Form method="post" action="/logout" id="logout-form">
-                <button className="cta-alt">Logout</button>
+                <button className="cta-alt">{t("header.logout")}</button>
               </Form>)}
             {!userId && (
               <Link to="/auth" className="cta">
-                Login
+                {t("header.login")}
               </Link>
             )}
           </li>

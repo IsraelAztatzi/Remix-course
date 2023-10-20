@@ -1,5 +1,5 @@
 import { FaTrophy, FaHandshake } from 'react-icons/fa';
-
+import { useTranslation } from 'react-i18next';
 import PricingPlan from '~/components/marketing/PricingPlan';
 
 const PRICING_PLANS = [
@@ -20,9 +20,10 @@ const PRICING_PLANS = [
 ];
 
 export default function PricingPage() {
+  let { t } = useTranslation();
   return (
     <main id="pricing">
-      <h2>Great Product, Simple Pricing</h2>
+      <h2>{t("pricing.great")}</h2>
       <ol id="pricing-plans">
         {PRICING_PLANS.map((plan) => (
           <li key={plan.id} className="plan">

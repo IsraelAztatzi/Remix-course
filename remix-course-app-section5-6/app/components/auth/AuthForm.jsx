@@ -1,5 +1,7 @@
 import { Form, Link, useSearchParams, useNavigation, useActionData } from '@remix-run/react';
 import { FaLock, FaUserPlus } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
+
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -13,17 +15,18 @@ function AuthForm() {
     authMode === 'login' ? 'Create a new user' : 'Log in with existing user';
 
   const isSubmitting = navigation.state !== 'idle';
+  let { t } = useTranslation();
   return (
     <Form method="post" className="form" id="auth-form">
       <div className="icon-img">
         {authMode === 'login' ? <FaLock /> : <FaUserPlus />}
       </div>
       <p>
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">{t("authf.email")}</label>
         <input type="email" id="email" name="email" required />
       </p>
       <p>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{t("authf.password")}</label>
         <input type="password" id="password" name="password" minLength={7} />
       </p>
       {validationErrors && (

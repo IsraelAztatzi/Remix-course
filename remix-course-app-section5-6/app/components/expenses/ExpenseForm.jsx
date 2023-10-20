@@ -1,5 +1,5 @@
 import { Form, Link, useActionData, useLoaderData, useMatches, useNavigation, useParams } from '@remix-run/react';
-
+import { useTranslation } from 'react-i18next';
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
   const validationErrors = useActionData();
@@ -28,19 +28,19 @@ function ExpenseForm() {
       date: '',
     };
   const isSubmitting = navigation.state !== 'idle';
-
+  const { t } = useTranslation();
 
 
   return (
     <Form method={expenseData ? 'patch' : 'post'} className='form' id='expense-form' >
       <p>
-        <label htmlFor="title">Expense Title</label>
+        <label htmlFor="title">{t("expense.form.title")}</label>
         <input type="text" id="title" name="title" required maxLength={30} defaultValue={defaultValues.title} />
       </p>
 
       <div className="form-row">
         <p>
-          <label htmlFor="amount">Amount</label>
+          <label htmlFor="amount">{t("expense.form.amount")}</label>
           <input
             type="number"
             id="amount"
@@ -52,7 +52,7 @@ function ExpenseForm() {
           />
         </p>
         <p>
-          <label htmlFor="date">Date</label>
+          <label htmlFor="date">{t("expense.form.date")}</label>
           <input type="date" id="date" name="date" max={today} required defaultValue={defaultValues.date ? defaultValues.date.slice(0, 10) : ''} />
         </p>
       </div>
@@ -66,7 +66,7 @@ function ExpenseForm() {
         <button disabled={isSubmitting}>
           {isSubmitting ? 'Saving...' : 'Save Expense'}
         </button>
-        <Link to="..">Cancel</Link>
+        <Link to="..">{t("expense.form.cancel")}</Link>
       </div>
     </Form>
   );
